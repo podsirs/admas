@@ -1,0 +1,4 @@
+base url
+- folder view -> index.php (include nya pake base url) / gambar navbar juga 
+
+- folder view -> file assets (include nya pake base url)
