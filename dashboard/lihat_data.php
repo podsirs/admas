@@ -1,8 +1,22 @@
 <?php 
-    include "../view/assets.php"
+  session_start();
+  include "../view/assets.php";
+  include "../koneksi.php";
+  $id_pengaduan = $_GET['id_pengaduan'];
+  $sql = mysqli_query($koneksi,"SELECT * FROM pengaduan  WHERE id_pengaduan='$id_pengaduan'");
+  if ($sql) {
+    $join = mysqli_query($koneksi ,"SELECT * FROM `masyarakat` JOIN pengaduan ON masyarakat.nik = pengaduan.nik JOIN tanggapan ON pengaduan.id_pengaduan = tanggapan.id_pengaduan JOIN petugas ON tanggapan.id_petugas = petugas.id_petugas;");
+    $data = mysqli_fetch_array($join);
+    $nama_petugas = $data['nama_petugas']; 
+    $level_petugas = $data['level'];
+    $nik = $data['nik'];
+  }
+  else {
+    echo "Pengaduan Tidak di temukan";
+  }
 ?>
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper"> 
 
     <!-- ini sidebar -->
     <?php 
@@ -29,14 +43,18 @@
         <div class="content">
         <div class="container-fluid">
             <div class="card">
-                    <h4 class="text-center text-success my-1">PENGERJAAN TELAH SELESAI</h4>
+                    <h4 class="text-center text-success my-1 uppercase"><?php echo $data['status']; ?></h4>
                 </div>
             <div class="card card-widget">
               <div class="card-header">
                 <div class="user-block">
                   <img class="img-circle" src="../template/dist/img/user1-128x128.jpg" alt="User Image">
-                  <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
-                  <span class="description">Shared publicly - 7:30 PM Today</span>
+                  <span class="username"><a href="#"><?php  
+                  $sql_nama = mysqli_query($koneksi ,"SELECT * FROM pengaduan JOIN masyarakat ON masyarakat.nik = pengaduan.nik");
+                  $sql_nama = mysqli_fetch_array($sql_nama); 
+                  echo $sql_nama['nama'];
+                  ?></a></span>
+                  <span class="description"><?php echo $data['tgl_pengaduan']; ?></span>
                 </div>
                 <div class="card-tools">
                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -51,44 +69,40 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <img class="img-fluid pad" src="../template/dist/img/photo2.png" alt="Photo">
+                <img class="img-fluid pad" src="../assets/foto_pengaduan/<?php echo $data['foto']; ?>" alt="Photo">
                 <hr style="border: 1px solid black;">
-                <p class="text-center">I took this photo this morning. What do you guys think?</p>
+                <p class="text-center"><?php 
+                  $sql_laporan = mysqli_query($koneksi ,"SELECT * FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'");
+                  $data_laporan = mysqli_fetch_array($sql_laporan);
+                  echo $data_laporan['isi_laporan']
+                ?></p>
                 
                 <hr style="border: 1px solid black;">
               <!-- /.card-body -->
-              <div class="card-footer card-comments">
-                <div class="card-comment">
-                  <!-- User image -->
-                  <img class="img-circle img-sm" src="../template/dist/img/user3-128x128.jpg" alt="User Image">
+               <?php 
+                        $sql_tanggapan = mysqli_query($koneksi, "SELECT * FROM tanggapan WHERE id_pengaduan = '$id_pengaduan'");
+                        while ($data = mysqli_fetch_array($sql_tanggapan)) {
+                          ?>
+                            <div class="card-footer card-comments">
+                              <div class="card-comment">
+                                <!-- User image -->
+                                <img class="img-circle img-sm" src="../template/dist/img/user3-128x128.jpg" alt="User Image">
 
-                  <div class="comment-text">
-                    <span class="username">
-                      Maria Gonzales
-                      <span class="text-muted float-right">Petugas</span>
-                    </span><!-- /.username -->
-                    It is a long established fact that a reader will be distracted
-                    by the readable content of a page when looking at its layout.
-                  </div>
-                  <!-- /.comment-text -->
-                </div>
-                <!-- /.card-comment -->
-                <div class="card-comment">
-                  <!-- User image -->
-                  <img class="img-circle img-sm" src="../template/dist/img/user4-128x128.jpg" alt="User Image">
-
-                  <div class="comment-text">
-                    <span class="username">
-                      Luna Stark
-                      <span class="text-muted float-right">Admin</span>
-                    </span><!-- /.username -->
-                    It is a long established fact that a reader will be distracted
-                    by the readable content of a page when looking at its layout.
-                  </div>
-                  <!-- /.comment-text -->
-                </div>
-                <!-- /.card-comment -->
-              </div>
+                                <div class="comment-text">
+                                  <span class="username">
+                                    <?php echo $nama_petugas;?>
+                                    <span class="text-muted float-right"><?php echo $level_petugas; ?></span>
+                                  </span><!-- /.username -->
+                                  <?php 
+                                    echo $data['tanggapan']
+                                  ?>
+                                </div>
+                                <!-- /.comment-text -->
+                              </div>
+                            </div>
+                          <?php 
+                        }
+                          ?>
             </div>
         </div><!-- /.container-fluid -->
         </div>

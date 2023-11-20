@@ -7,9 +7,6 @@
     }
     else {
       ?>
-      <?php 
-        echo $_SESSION['nama'];
-      ?>
       <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
@@ -59,22 +56,20 @@
                 </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form>
+              <form action="../controller/aksi_pengaduan.php" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
                     <label>Jelaskan Laporan Anda <span class="text-secondary">(Max : 70 Huruf)</span></label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="isi_laporan" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
+                    <label>Tanggal Kejadian</label>
+                    <input type="date" class="form-control" name="tgl_pengaduan" id="">
+                  </div>
+                  <div class="form-group">
+                    <label>Pilih Foto</label>
                     <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Pilih file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                      </div>
+                        <input class="form-control" type="file" id="formFile" name="foto" required accept="image/png, image/jpg, image/jpeg"/>
                     </div>
                   </div>
                 </div>
@@ -88,34 +83,10 @@
             </div>
         </div>
     </div>
-</body>
 
 
-<!-- Modal -->
-<div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bg-darkred rounded-4 shadow">
-      <div class="modal-header p-5 pb-4 border-bottom-0">
-        <h1 class="fw-bold mb-0 fs-2 text-white">Login</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
 
-      <div class="modal-body p-5 pt-0">
-        <form action="" method="">
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Nama Pengguna</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-          </div>
-          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Masuk</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+
         </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->

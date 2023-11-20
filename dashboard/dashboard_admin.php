@@ -1,7 +1,18 @@
 <?php 
+    session_start();
+    include "../koneksi.php";
     include "../view/assets.php";
+
+    $query_pengaduan = mysqli_query($koneksi, "SELECT * FROM pengaduan");
+    $cek_pengaduan = mysqli_num_rows($query_pengaduan);
 ?>
-<body class="hold-transition sidebar-mini">
+    <?php 
+        if(empty($_SESSION['username'])) {
+            header('location:../view/index.php');
+        }
+        else {
+            ?>
+            <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
     <!-- ini sidebar -->
@@ -21,7 +32,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <p class="text-secondary">Halo, Admin</p>
+                <p class="text-secondary">Halo, <?php echo $_SESSION['nama']; ?></p>
                 </ol>
             </div><!-- /.col -->
             </div><!-- /.row -->
@@ -38,7 +49,7 @@
                 <div class="small-box bg-primary">
                 <div class="inner">
                     <p>Jumlah Pengaduan</p>
-                    <h3>13</h3>
+                    <h3><?php echo $cek_pengaduan; ?></h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -97,7 +108,7 @@
                   <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Nik Masyarakat</th>
+                    <th>NIK Masyarakat</th>
                     <th>Tanggal</th>
                     <th>Isi Pengaduan</th>
                     <th>Status</th>
@@ -105,24 +116,19 @@
                   </thead>
 
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>
-                        31242641941
-                    </td>
-                    <td>2023-05-21</td>
-                    <td>Sampah berserakan di jalan!</td>
-                    <td>Proses</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>
-                        3124314512
-                    </td>
-                    <td>2023-05-23</td>
-                    <td>Tolong perbaiki lampu jalan mati</td>
-                    <td>Selesai</td>
-                  </tr>
+                  <?php 
+                        $i = 1;
+                        $sql = mysqli_query($koneksi, "SELECT * FROM pengaduan ORDER BY tgl_pengaduan DESC LIMIT 5");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            echo "  <tr>
+                                    <td>".$i++."</td>
+                                    <td>".$data['nik']."</td>
+                                    <td>".$data['tgl_pengaduan']."</td>
+                                    <td>".$data['isi_laporan']."</td>
+                                    <td><a href='lihat_data.php?id_pengaduan=".$data['id_pengaduan']."'>Detail</a></td>
+                                    </tr>";
+                        }
+                    ?>
                   </tbody>
                 </table>
                 </div>
@@ -146,3 +152,6 @@
     </div>
 <!-- ./wrapper -->
 </body>
+            <?php 
+        }
+             ?>

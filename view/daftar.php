@@ -32,6 +32,7 @@
                     <div class="col-12 mb-3">
                         <label>Telp</label>
                         <input type="text" name="telp" class="form-control rounded-3" id="floatingInput" required placeholder="08xx xxxx xxxx">
+                        <input type="text" name="level" class="form-control rounded-3" value="masyarakat" hidden>
                     </div>
                     <div class="col-12 mb-5">
                         <input type="submit" class="btn btn-danger form-control mt-3" value="Daftar">

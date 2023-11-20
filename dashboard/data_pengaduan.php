@@ -1,5 +1,7 @@
 <?php 
-    include "../view/assets.php"
+  session_start();
+  include "../koneksi.php";
+  include "../view/assets.php";
 ?>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -45,28 +47,23 @@
                   </tr>
                   </thead>
 
-                  <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>
-                        31242641941
-                    </td>
-                    <td>2023-05-21</td>
-                    <td>Sampah berserakan di jalan!</td>
-                    <td>Proses</td>
-                    <td><a href="lihat_data.php">Lihat</a></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>
-                        3124314512
-                    </td>
-                    <td>2023-05-23</td>
-                    <td>Tolong perbaiki lampu jalan mati</td>
-                    <td>Selesai</td>
-                    <td><a href="lihat_data.php">Lihat</a></td>
-                  </tr>
+                   <tbody>
+                  <?php 
+                        $i = 1;
+                        $sql = mysqli_query($koneksi, "SELECT * FROM pengaduan ORDER BY tgl_pengaduan DESC");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            echo "  <tr>
+                                    <td>".$i++."</td>
+                                    <td>".$data['nik']."</td>
+                                    <td>".$data['tgl_pengaduan']."</td>
+                                    <td>".$data['isi_laporan']."</td>
+                                    <td>".$data['status']."</td>
+                                    <td><a href='lihat_data.php?id_pengaduan=".$data['id_pengaduan']."'>Detail</a></td>
+                                    </tr>";
+                        }
+                    ?>
                   </tbody>
+                  
                 </table>
                 </div>
             </div>

@@ -1,7 +1,11 @@
 <?php 
-    include "../view/assets.php"
+    session_start();
+    include "../koneksi.php";
+    include "../view/assets.php";
+
+    if ($_SESSION['level'] == 'admin') {
 ?>
-<body class="hold-transition sidebar-mini">
+    <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
     <!-- ini sidebar -->
@@ -45,10 +49,13 @@
                         No
                       </th>
                       <th>
-                        Name
+                        NIK
                       </th>
                       <th>
-                        Status
+                        Nama
+                      </th>
+                      <th>
+                        Level
                       </th>
                       <th class="text-center">
                       Aksi
@@ -56,27 +63,52 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>
-                          1
-                      </td>
-                      <td>
-                          <a>
-                              Budi Sanjoyo
-                          </a>
-                          <br>
-                      </td>
-                      <td>
-                        Admin
-                      </td>
-                      <td class="text-center">
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
-                          </a>
-                      </td>
-                  </tr>
+                <?php 
+                    $i = 1;
+                    $query = "SELECT * FROM masyarakat";
+                    $sql_eksekusi = mysqli_query($koneksi, $query);
+                    while($data = mysqli_fetch_array($sql_eksekusi)) {
+                           echo "  <tr>
+                                        <td>".$i++."</td>
+                                        <td>".$data['nik']."</td>
+                                        <td>".$data['nama']."</td>
+                                        <td>".$data['level']."</td>
+                                        <td class='text-center'>
+                                            <button class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal".$data['nik']."'>
+                                            <i class='fas fa-pencil-alt'></i>Edit</button>
+                                        </td>
+                                    </tr>";
+                                    // modal
+                                    echo "<div class='modal fade' id='exampleModal".$data['nik']."' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <h1 class='modal-title fs-5' id='exampleModalLabel'>Ubah Level</h1>
+                                                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                            </div>
+                                            <div class='modal-body'>
+                                                <form action='../controller/aksi_level.php' method='GET'>
+                                                    <label>NIK</label>
+                                                    <input type='text' class='form-control' readonly name='nik' value='".$data['nik']."'>
+                                                    <label>Nama Pengguna</label>
+                                                    <input type='text' name='nama' class='form-control mb-2' readonly value='".$data['nama']."'>
+                                                    <label>Level Pengguna</label>
+                                                    <select name='level' class='form-control'>
+                                                        <option value='masyarakat'>masyarakat</option>
+                                                        <option value='admin'>admin</option>
+                                                    </select>
+                                                    </div>
+                                                    <div class='modal-footer'>
+                                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Tutup</button>
+                                                    <button type='submit' class='btn btn-primary'>Simpan</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>";
+                                // modal
+                    }
+                ?>
               </tbody>
           </table>
         </div>
@@ -98,3 +130,13 @@
     </div>
 <!-- ./wrapper -->
 </body>
+<?php 
+    }
+    else {
+        header('location:error.php');
+    }
+ ?>
+
+ <!-- modal -->
+
+ <!-- modal end -->

@@ -7,7 +7,7 @@
     $password = $_POST['password'];
     $telp = $_POST['telp'];
 
-    $query = "INSERT INTO masyarakat (nik,nama,username,password,telp) VALUES ('$nik','$nama','$username','$password','$telp')";
+    $query = "INSERT INTO masyarakat (nik,nama,username,password,telp,level) VALUES ('$nik','$nama','$username','$password','$telp')";
     $sql_eksekusi = mysqli_query($koneksi, $query);
 
     if ($sql_eksekusi) {

@@ -1,3 +1,4 @@
+
 <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -36,7 +37,7 @@
           <ion-icon name="person-circle-outline" class="fs-2 text-white"></ion-icon>
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['nama']; ?></a>
         </div>
       </div>
 
@@ -72,12 +73,18 @@
                   <p>Dashboard</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="../dashboard/setting_pengguna.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Setting Pengguna</p>
-                </a>
-              </li>
+              <?php 
+                  if ($_SESSION['level'] == 'admin') {
+                  ?>
+                  <li class="nav-item">
+                      <a href="../dashboard/setting_pengguna.php" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Setting Pengguna</p>
+                      </a>
+                  </li>
+                  <?php 
+                }
+                   ?>
               <li class="nav-item">
                 <a href="../dashboard/dashboard_masyarakat.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
