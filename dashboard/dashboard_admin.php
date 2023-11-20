@@ -62,12 +62,23 @@
                 <div class="small-box bg-warning">
                 <div class="inner">
                     <p class="text-white">Jumlah Belum diproses</p>
-                    <h3 class="text-white">6</h3>
+                    <h3 class="text-white">
+                        <?php 
+                            $query_belum = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE status = '3'");
+                            $row_belum = mysqli_num_rows($query_belum);
+                            if ($row_belum >0) {
+                                echo $row_belum;
+                            }
+                            else {
+                                echo "0";
+                            }
+                        ?>
+                    </h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer" style="color: white !important;">Selengkapnya <i class="fas fa-arrow-circle-right text-white"></i></a>
+                <a href="data_pengaduan.php?status=3" class="small-box-footer" style="color: white !important;">Selengkapnya <i class="fas fa-arrow-circle-right text-white"></i></a>
                 </div>
             </div>
 
@@ -75,12 +86,23 @@
                 <div class="small-box bg-info">
                 <div class="inner">
                     <p>Pengaduan diproses</p>
-                    <h3>8</h3>
+                    <h3>
+                    <?php 
+                            $query_sedang = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE status = '2'");
+                            $row_sedang = mysqli_num_rows($query_sedang);
+                            if ($row_sedang >0) {
+                                echo $row_sedang;
+                            }
+                            else {
+                                echo "0";
+                            }
+                        ?>
+                    </h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="data_pengaduan.php?status=2" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -89,12 +111,23 @@
                 <div class="small-box bg-success">
                 <div class="inner">
                     <p>Pengaduan Selesai</p>
-                    <h3>65</h3>
+                    <h3>
+                    <?php 
+                            $query_sudah = mysqli_query($koneksi, "SELECT * FROM pengaduan WHERE status = '1'");
+                            $row_sudah = mysqli_num_rows($query_sudah);
+                            if ($row_sudah >0) {
+                                echo $row_sudah;
+                            }
+                            else {
+                                echo "0";
+                            }
+                        ?>
+                    </h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="data_pengaduan.php?status=1" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 

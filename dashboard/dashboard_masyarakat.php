@@ -59,6 +59,7 @@
               <form action="../controller/aksi_pengaduan.php" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
+                    <input type="text" value="3" name="status" hidden>
                     <label>Jelaskan Laporan Anda <span class="text-secondary">(Max : 70 Huruf)</span></label>
                     <input type="text" class="form-control" name="isi_laporan" required>
                   </div>
